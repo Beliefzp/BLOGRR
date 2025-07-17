@@ -100,7 +100,7 @@ def process_mri_image(input_file, output_file, target_values):
     nib.save(new_img, output_file)
 
 
-txt_dir = '/TXT'
+txt_dir = 'Dataset/In_house_data/TXT'
 txt_pathList = glob.glob(os.path.join(txt_dir, '*.txt'))
 
 for txt_path in txt_pathList:
