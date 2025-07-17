@@ -11,11 +11,7 @@ Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatmen
 
 ## Limitations of Existing Methods
 The performance of existing methods is highly sensitive to the chosen threshold. The figure below illustrates the Dice scores obtained by various methods under different threshold settings. It is evident that inappropriate threshold selection can lead to a significant drop in performance. Since manually setting the threshold often fails to identify the optimal value, threshold selection has become a critical bottleneck hindering the advancement of reconstruction-based unsupervised anomaly detection methods.
-<p align="center"> <img src="imgs/model_figure.png" width="80%"> </p>
-
-## Experimental results
-**Table 1.** Means and standard deviations of the Dice coefficient and HD95 of the segmentation results. The UB and SB results of the competing methods are shown. Asterisks indicate that the difference between BLOGRR and the competing method is statistically significant (***: p < 0.001, **: p < 0.01, *: p < 0.05) with Wilcoxon signed-rank tests. The best results are highlighted in bold.
-<p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
+<p align="center"> <img src="imgs/Threshold_limitation.png" width="80%"> </p>
 
 ## Training
 ### Data Preparation
@@ -57,5 +53,6 @@ After training is completed, you will find the trained reconstruction network in
 ### Start evaluting
 You can switch between training and testing modes by directly modifying the **config.eval** parameter in **BLOGRR.py**. When **config.eval=True**, running **BLOGRR.py** performs testing; when **config.eval=False**, it performs training.
 The figure below is the experimental results in the paper:
+**Table 1.** Means and standard deviations of the Dice coefficient and HD95 of the segmentation results. The UB and SB results of the competing methods are shown. Asterisks indicate that the difference between BLOGRR and the competing method is statistically significant (***: p < 0.001, **: p < 0.01, *: p < 0.05) with Wilcoxon signed-rank tests. The best results are highlighted in bold.
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
