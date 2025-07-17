@@ -18,6 +18,8 @@ import copy
 def get_config():
     parser = ArgumentParser()
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size')
+    parser.add_argument('--save_model_path_lower', type=str, default='Save_model/lower')
+    parser.add_argument('--save_model_path_upper', type=str, default='Save_model/upper')
     parser.add_argument('--device', type=int, default=1)
     parser.add_argument('--lr_schedule', type=str, default=False, help='Use learning rate schedule.')    
     parser.add_argument('--model_weight', type=str, default='')
