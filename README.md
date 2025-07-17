@@ -22,7 +22,7 @@ We begin by registering all the datasets used in the study—including HCP, BraT
 Since BLOGRR currently only supports 2D images, while most medical data comes in 3D volumes, the second step involves converting each 3D volume into 2D slices along the axial plane. Given that the initial and final slices of medical scans often contain little to no meaningful information, we recommend selecting slices between indices 30 and 120. As a result, each 3D volume will yield 120 2D slice images. These images are then resized to a resolution of 128×128 pixels.
 
 #### Third Stage
-Finally, the processed data is organized into specific directories. The folder structure for the datasets used in our experiments is as follows: **final_test_data** contains the BraTS2021 dataset used for final testing; **HCP_train_data** and **In_house_data** contain the training data for the BLOGRR model; **sample_test_data** is a small dataset used to monitor the BLOGRR training process in real time, which can be created by randomly sampling a subset of BraTS2021 data.
+Finally, the processed data is organized into specific directories. The folder structure for the datasets used in our experiments is as follows: **final_test_data** contains the BraTS2021 dataset used for final testing; **HCP_train_data** and **In_house_data** contain the training data for the BLOGRR model, it is important to note that, at this stage, the seg folder under the In-house data directory does not yet contain any segmentation labels. This is because the In-house dataset we use includes only medical images and their corresponding radiology reports, which were written by experienced clinical experts and are stored in the TXT folder. In the following sections, we will explain in detail how to generate pseudo-labels from these reports.; **sample_test_data** is a small dataset used to monitor the BLOGRR training process in real time, which can be created by randomly sampling a subset of BraTS2021 data.
 ```
 ├── Dataset
 │   ├── final_test_data
@@ -33,10 +33,25 @@ Finally, the processed data is organized into specific directories. The folder s
 │   ├── In_house_data
 │   │   ├── img
 │   │   └── seg
+│   │   └── TXT
 │   ├── sample_test_data
 │   │   ├── img
 │   │   └── seg
 ```
+
+### Report-to-tumor mapping module
+First, we provide a detailed explanation of the **Report-to-Tumor Mapping Module** described in our paper. Due to space limitations in the original version, this module was not thoroughly explained, which unfortunately contributed to the rejection of our paper in the earlier **IPMI 2025** submission.
+
+The **in-house dataset** we use does not include manually annotated tumor regions. Instead, it contains only radiology reports, which are written by experienced clinicians and often include rich lesion-related information, such as location and appearance. Based on this, our core idea is to extract approximate lesion locations from the reports to generate pseudo labels.
+
+Specifically, we created a **brain-region-to-ID mapping table** stored in **Get_pseudo_label/final_version.xlsx**. The first column contains brain region IDs; the second column specifies laterality (e.g., "left hemisphere" or "right hemisphere"); and the third to twelfth columns list commonly used radiological descriptors of each region, divided into Coarse Level and Fine Level descriptions. For details on how this table was constructed, please refer to our related work[X.Gao et al.](https://www.sciencedirect.com/science/article/pii/S0895611125000655)。
+
+Next, by running the script **Get_pseudo_label/fine_grained_pseudo_label.py**, we convert the radiology reports in the **In_house_data/TXT** directory into pseudo labels, which are then saved in the In_house_data/seg directory:
+```
+python fine_grained_pseudo_label.py
+```
+Notably, the script is very simple — it primarily uses keyword matching and a series of conditional checks. Despite its simplicity, it proves to be a simple yet effective approach for generating reliable pseudo labels.
+
 
 ### Start Training
 #### First Stage
