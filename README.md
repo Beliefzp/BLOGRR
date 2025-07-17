@@ -12,6 +12,8 @@ Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatmen
 ## Experimental results
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
+**Table 1.** Means and standard deviations of the Dice coefficient and HD95 of the segmentation results. The UB and SB results of the competing methods are shown. Asterisks indicate that the difference between BLOGRR and the competing method is statistically significant (***: p < 0.001, **: p < 0.01, *: p < 0.05) with Wilcoxon signed-rank tests. The best results are highlighted in bold.
+
 ## Training
 ### Data Preparation
 #### First Stage
