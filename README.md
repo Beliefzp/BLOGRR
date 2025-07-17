@@ -4,6 +4,9 @@ Official PyTorch implementation for our MICCAI 2025 workshop paper: "Unsupervise
 ## Abstract
 Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatment without the high cost of manual annotations. Existing methods typically use a reconstruction-based strategy, where an image self-reconstruction network is trained with normal data and applied to images with brain tumors. The reconstruction error map is then used to indicate the tumor regions and is thresholded to obtain tumor segmentation. However, optimal threshold selection is challenging without annotations in the unsupervised case, which limits the accuracy and applicability of these reconstruction-based methods. To address the problem, in this work we propose the Bi-Level Optimization Guided by Radiological Reports (BLOGRR) framework for unsupervised brain tumor segmentation. BLOGRR extends the reconstruction-based strategy with an additional threshold estimation network. Instead of selecting an empirical fixed threshold, it determines an adaptive threshold for every sample. Specifically, we develop an iterative bi-level optimization procedure, where lower and upper loops jointly update the reconstruction network and threshold estimation network. As no manual annotation is available, BLOGRR resorts to radiological reports, which provide key descriptions of image anomalies in the form of natural language, for learning the threshold determination. The reports are processed with brain anatomical knowledge to indicate potential tumor regions. Two loss functions are developed for the two loops to optimize the reconstruction network and threshold estimation network. Experimental results on a public dataset and an in-house dataset indicate that BLOGRR outperforms existing unsupervised methods with noticeable improvements.
 
+## Network structure
+<p align="center"> <img src="imgs/model_figure.png" width="80%"> </p>
+
 ## Experimental results
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
@@ -34,14 +37,18 @@ Finally, the processed data is organized into specific directories. The folder s
 
 ### Start Training
 #### First Stage
-在准备好数据集以后，你需要修改以后**dataload.py**中的数据集加载代码，这个比较简单，根据你的数据命名方式简单修改一下即可，相信你可以的！
-同时，如果你将数据集放在了一些自定义的文件夹下面，没有按照**Data Preparation**部分所介绍的文件夹格式的话，你需要修改一下**BLOGRR.py**中**get_config**函数中的数据集路径。
-
+After preparing your dataset, modify the dataset loading code in **dataload.py** according to your file naming convention. This part is quite straightforward, and you should be able to handle it easily!
+Additionally, if you've stored your dataset in a custom directory structure rather than following the format described in the Data Preparation section, you'll need to update the dataset paths in the **get_config** function within **BLOGRR.py** accordingly.
 #### Second Stage
-运行如下命令即可开始进行训练，在训练过程中，你可以通过wandb来观察训练的效果，可以手动选择较好的模型进行保存，也可以直接选择最后一个epoch的结果，不过建议选择通过观察wandb来选择较好的模型进行保存，以便可以复现出论文中的实验结果。
+Run the following command to start training. During the training process, you can monitor the results in real-time using wandb. You can either manually save the best-performing model or use the final epoch’s model. However, it's recommended to select the best model based on the wandb visualization to better reproduce the results presented in the paper.
 ```
 python BLOGRR.py
 ```
+#### Third Stage
+After training is completed, you will find the trained reconstruction network in the **Save_model/lower directory**, and the trained threshold estimation network in the **Save_model/upper directory**.
 
-
+### Start evaluting
+You can switch between training and testing modes by directly modifying the **config.eval** parameter in **BLOGRR.py**. When **config.eval=True**, running **BLOGRR.py** performs testing; when **config.eval=False**, it performs training.
+The figure below is the experimental results in the paper:
+<p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
