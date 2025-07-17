@@ -7,6 +7,8 @@ Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatmen
 ## Network structure
 <p align="center"> <img src="imgs/model_figure.png" width="80%"> </p>
 
+**Fig. 1.**  An overview of BLOGRR. BLOGRR consists of lower and upper loops, which jointly update the reconstruction network and threshold estimation network. Moreover, pseudo-labels are generated from radiological reports in the upper loops for updating the threshold estimation network. The lower and upper loops are performed iteratively.
+
 ## Experimental results
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
