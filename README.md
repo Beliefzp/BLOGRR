@@ -6,3 +6,26 @@ Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatmen
 
 ## Experimental results
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
+
+## Training
+### Training Data Preparation
+#### First Stage
+We begin by registering all the datasets used in the study—including HCP, BraTS, and the in-house dataset—to the MNI152 standard space.
+#### Second Stage
+Since BLOGRR currently only supports 2D images, while most medical data comes in 3D volumes, the second step involves converting each 3D volume into 2D slices along the axial plane. Given that the initial and final slices of medical scans often contain little to no meaningful information, we recommend selecting slices between indices 30 and 120. As a result, each 3D volume will yield 120 2D slice images. These images are then resized to a resolution of 128×128 pixels.
+#### Third Stage
+Finally, the processed data is organized into specific directories. The folder structure for the datasets used in our experiments is as follows: **final_test_data** contains the BraTS2021 dataset used for final testing; **HCP_train_data** and **In_house_data** contain the training data for the BLOGRR model; **sample_test_data** is a small dataset used to monitor the BLOGRR training process in real time, which can be created by randomly sampling a subset of BraTS2021 data.
+```
+├── Dataset
+│   ├── final_test_data
+│   │   ├── img
+│   │   └── seg
+│   ├── HCP_train_data
+│   │   └── img
+│   ├── In_house_data
+│   │   ├── img
+│   │   └── seg
+│   ├── sample_test_data
+│   │   ├── img
+│   │   └── seg
+```
