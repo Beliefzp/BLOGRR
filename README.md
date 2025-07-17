@@ -4,14 +4,14 @@ Official PyTorch implementation for our MICCAI 2025 workshop paper: "Unsupervise
 ## Abstract
 Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatment without the high cost of manual annotations. Existing methods typically use a reconstruction-based strategy, where an image self-reconstruction network is trained with normal data and applied to images with brain tumors. The reconstruction error map is then used to indicate the tumor regions and is thresholded to obtain tumor segmentation. However, optimal threshold selection is challenging without annotations in the unsupervised case, which limits the accuracy and applicability of these reconstruction-based methods. To address the problem, in this work we propose the Bi-Level Optimization Guided by Radiological Reports (BLOGRR) framework for unsupervised brain tumor segmentation. BLOGRR extends the reconstruction-based strategy with an additional threshold estimation network. Instead of selecting an empirical fixed threshold, it determines an adaptive threshold for every sample. Specifically, we develop an iterative bi-level optimization procedure, where lower and upper loops jointly update the reconstruction network and threshold estimation network. As no manual annotation is available, BLOGRR resorts to radiological reports, which provide key descriptions of image anomalies in the form of natural language, for learning the threshold determination. The reports are processed with brain anatomical knowledge to indicate potential tumor regions. Two loss functions are developed for the two loops to optimize the reconstruction network and threshold estimation network. Experimental results on a public dataset and an in-house dataset indicate that BLOGRR outperforms existing unsupervised methods with noticeable improvements.
 
+## Limitations of Existing Methods
+The performance of existing methods is highly sensitive to the chosen threshold. The figure below illustrates the Dice scores obtained by various methods under different threshold settings. It is evident that inappropriate threshold selection can lead to a significant drop in performance. Since manually setting the threshold often fails to identify the optimal value, threshold selection has become a critical bottleneck hindering the advancement of reconstruction-based unsupervised anomaly detection methods.
+<p align="center"> <img src="imgs/Threshold_limitation.png" width="80%"> </p>
+
 ## Network structure
 <p align="center"> <img src="imgs/model_figure.png" width="80%"> </p>
 
 **Fig. 1.**  An overview of BLOGRR. BLOGRR consists of lower and upper loops, which jointly update the reconstruction network and threshold estimation network. Moreover, pseudo-labels are generated from radiological reports in the upper loops for updating the threshold estimation network. The lower and upper loops are performed iteratively.
-
-## Limitations of Existing Methods
-The performance of existing methods is highly sensitive to the chosen threshold. The figure below illustrates the Dice scores obtained by various methods under different threshold settings. It is evident that inappropriate threshold selection can lead to a significant drop in performance. Since manually setting the threshold often fails to identify the optimal value, threshold selection has become a critical bottleneck hindering the advancement of reconstruction-based unsupervised anomaly detection methods.
-<p align="center"> <img src="imgs/Threshold_limitation.png" width="80%"> </p>
 
 ## Training
 ### Data Preparation
@@ -53,6 +53,7 @@ After training is completed, you will find the trained reconstruction network in
 ### Start evaluting
 You can switch between training and testing modes by directly modifying the **config.eval** parameter in **BLOGRR.py**. When **config.eval=True**, running **BLOGRR.py** performs testing; when **config.eval=False**, it performs training.
 The figure below is the experimental results in the paper:
+
 **Table 1.** Means and standard deviations of the Dice coefficient and HD95 of the segmentation results. The UB and SB results of the competing methods are shown. Asterisks indicate that the difference between BLOGRR and the competing method is statistically significant (***: p < 0.001, **: p < 0.01, *: p < 0.05) with Wilcoxon signed-rank tests. The best results are highlighted in bold.
 <p align="center"> <img src="imgs/main_result.png" width="80%"> </p>
 
