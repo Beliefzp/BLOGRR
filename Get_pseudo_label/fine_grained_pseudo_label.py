@@ -100,20 +100,20 @@ def process_mri_image(input_file, output_file, target_values):
     nib.save(new_img, output_file)
 
 
-IDH_txt_dir = '/TXT'
-IDH_txt_pathList = glob.glob(os.path.join(IDH_txt_dir, '*.txt'))
+txt_dir = '/TXT'
+txt_pathList = glob.glob(os.path.join(txt_dir, '*.txt'))
 
-for IDH_txt_path in IDH_txt_pathList:
-    IDH_txt_base_name = os.path.basename(IDH_txt_path)
-    name_without_extension = os.path.splitext(IDH_txt_base_name)[0]
+for txt_path in txt_pathList:
+    txt_base_name = os.path.basename(txt_path)
+    name_without_extension = os.path.splitext(txt_base_name)[0]
     MNI152_path = 'MNI152_Hammer_atlas.nii.gz'
-    target_values = find_word_id(IDH_txt_path)
+    target_values = find_word_id(txt_path)
 
     if len(target_values) == 0:
-        print(IDH_txt_base_name)
+        print(txt_base_name)
 
-    Stand_GT_Mask_name = f"{name_without_extension}_Low_MNI152_GT.nii.gz"
-    output_path = os.path.join('GBM_META_PCN_NoSkull', Stand_GT_Mask_name)
+    Stand_GT_Mask_name = f"{name_without_extension}_MNI152_GT.nii.gz"
+    output_path = os.path.join('Dataset/In_house_data/seg', Stand_GT_Mask_name)
     process_mri_image(MNI152_path, output_path, target_values)
 
     print(Stand_GT_Mask_name)
