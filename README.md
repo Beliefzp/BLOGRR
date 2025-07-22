@@ -7,6 +7,7 @@ Unsupervised brain tumor segmentation can aid brain tumor diagnosis and treatmen
 ## News
 - [x] [🚀2025.7.16] BLOGRR has been accepted to MICCAI 2025 Workshop🎉🎉🎉!
 - [x] [🚀2025.7.8] Another project of mine, focusing on the application of Multimodal Large Language Models (MLLMs) in segmentation tasks, is currently in progress — stay tuned for updates.
+- [x] [🚀] You can refer to my [Google Scholar profile](https://scholar.google.com/citations?user=HJp_ASEAAAAJ&hl=en) to explore my other research work.
 
 ## Limitations of Existing Methods
 The performance of existing methods is highly sensitive to the chosen threshold. The figure below illustrates the Dice scores obtained by various methods under different threshold settings. It is evident that inappropriate threshold selection can lead to a significant drop in performance. Since manually setting the threshold often fails to identify the optimal value, threshold selection has become a critical bottleneck hindering the advancement of reconstruction-based unsupervised anomaly detection methods.
